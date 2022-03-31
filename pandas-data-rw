@@ -1,0 +1,22 @@
+安装库:one:pymysql pip install pymysql
+      two:pip --default-timeout=100 install -U flask_sqlalchemy -i http://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com
+1.数据读取
+数据读取是进行数据预处理、建模与分析的前提。
+常见的数据源有3种，分别是数据库数据、文本文件（包括一般文本文件和CSV文件）、Excel文件
+    数据库读取
+    pandas提供了读取与存储关系型数据库数据的函数与方法。除了pandas库外，还需要使用SQLAlchemy库建立对应的数据库连接。 
+    SQLAlchemy配合相应数据库的Python连接工具（例如MySQL数据库需要安装mysqlclient或者pymysql库），使用create_engine函数，建立一个数据库连接。
+    creat_engine中填入的是一个连接字符串。在使用Python的SQLAlchemy时，MySQL和Oracle数据库连接字符串的格式如下
+    数据库产品名+连接工具名：//用户名:密码@数据库IP地址:数据库端口号/数据库名称？charset = 数据库数据编码
+  read_sql_table只能够读取数据库的某一个表格，不能实现查询的操作。
+      pandas.read_sql_table(table_name, con, schema=None, index_col=None, coerce_float=True, columns=None)
+  read_sql_query则只能实现查询操作，不能直接读取数据库中的某个表。
+      pandas.read_sql_query(sql, con, index_col=None, coerce_float=True)
+  read_sql是两者的综合，既能够读取数据库中的某一个表，也能够实现查询操作。
+      pandas.read_sql(sql, con, index_col=None, coerce_float=True, columns=None)
+在 creat_engine 中输入的是一个连接字符串。在使用 Python 的 SQLAlchemy 时，MySQL 和 Oracle 数据库连接字符串的格式如下 。
+数据库产品名+连接工具名 :// 用户名:密码@数据库 IP 地址:数据库端口号/数据库名称? charset =数据库数据编码
+    
+    数据存储
+数据库数据读取有三个函数，但数据存储则只有一个to_sql方法。
+DataFrame.to_sql(name, con, schema=None, if_exists=’fail’, index=True, index_label=None, dtype=None)
